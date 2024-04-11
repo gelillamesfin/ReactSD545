@@ -37,7 +37,7 @@ const defaultList = [
       uname: "Jay Zhou",
     },
     // comment content
-    content: "Nice, well done!",
+    content: "Thank you , Lord!",
     // created datetime
     ctime: "10-18 08:15",
     like: 88,
@@ -61,7 +61,7 @@ const defaultList = [
       uname: "John",
     },
     content:
-      "I told my computer I needed a break... now it will not stop sending me vacation ads.",
+      "Why can't Jesus wear jewlery...Because he breaks every chain :) ",
     ctime: "10-19 09:00",
     like: 66,
   },
@@ -140,7 +140,7 @@ return (
           <li className="nav-title">
             <span className="nav-title-text">Comments</span>
             {/* Like */}
-            <span className="total-reply">{10}</span>
+            <span className="total-reply">{commentList.length}</span>
           </li>
           <li className="nav-sort">
             {/**highlight class name： active */}
@@ -181,8 +181,23 @@ return (
         {/* comment list */}
         <div className='reply-list'>
            {/* comment item */}
-        {commentList.map(item => (
-          <div className="reply-item" key={item.rpid}>
+        {commentList.map(item => <Item item={item} onDeleteComment={deleteComment}/>)}
+ 
+      </div>
+    </div>
+    </div>
+
+  )
+}
+
+type ItemProps = {
+  item: Comment,
+  onDeleteComment:(rpid:number|string)=>void
+};
+function Item(props:ItemProps){
+  const {item,onDeleteComment}=props
+  return (        
+     <div className="reply-item" key={item.rpid}>
           {/* profile */}
               <div className="root-reply-avatar">
                 <div className="bili-avatar">
@@ -206,20 +221,14 @@ return (
                     {item.user.uid === user.uid && (
                       <span
                         className="delete-btn"
-                        onClick={() => deleteComment(item.rpid)}>
+                        onClick={() => onDeleteComment(item.rpid)}>
                         Delete
                       </span>
                     )}
                   </div>
                 </div>
               </div>
-            </div>
-        ))}
-      </div>
-    </div>
-    </div>
-
-  )
+            </div>)
 }
 
 export default App
