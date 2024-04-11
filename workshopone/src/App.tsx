@@ -1,5 +1,5 @@
 
-import { useRef, useState } from 'react'
+import { useRef, useState,useEffect } from 'react'
 import classNames from 'classnames'
 import _ from "lodash"
 import {v4 as uuidv4} from 'uuid'
@@ -20,65 +20,6 @@ interface Comment {
   like: number;
 }
 
-
-
-
-
-
-// Comment List data
-const defaultList = [
-  {
-    // comment id
-    rpid: 3,
-    // user info
-    user: {
-      uid: "13258165",
-      avatar: "",
-      uname: "Jay Zhou",
-    },
-    // comment content
-    content: "Thank you , Lord!",
-    // created datetime
-    ctime: "10-18 08:15",
-    like: 88,
-  },
-  {
-    rpid: 2,
-    user: {
-      uid: "36080105",
-      avatar: "",
-      uname: "Song Xu",
-    },
-    content: "The Lord is my shepherd!",
-    ctime: "11-13 11:29",
-    like: 88,
-  },
-  {
-    rpid: 1,
-    user: {
-      uid: "30009257",
-      avatar,
-      uname: "John",
-    },
-    content:
-      "Why can't Jesus wear jewlery...Because he breaks every chain :) ",
-    ctime: "10-19 09:00",
-    like: 66,
-  },
-
-  {
-    rpid: 10,
-    user: {
-      uid: "40009257",
-      avatar,
-      uname: "Gelilla",
-    },
-    content:
-      "Psalm 23",
-    ctime: "10-19 09:00",
-    like: 100,
-  },
-];
 // current logged in user info
 const user = {
   // userid
@@ -97,9 +38,25 @@ const tabs = [
   { type: 'newest', text: 'Newest' },
 ]
 
-const App = () => {
-  const [commentList, setCommentList] = useState<Comment[]>(_.orderBy(defaultList,'like','desc'));
+function useGetList(){
+  const [commentList, setCommentList] = useState<Comment[]>([]);
 
+    useEffect(() => {
+      async function getDefaultList() {
+        const response = await fetch("http://localhost:3000/list");
+        const data = await response.json();
+        setCommentList(_.orderBy(data, "like", "desc"));
+      }
+      getDefaultList();
+    }, []);
+    return{
+      commentList,
+      setCommentList
+    }
+}
+
+const App = () => {
+const {commentList,setCommentList}=useGetList();
   const [activeType,setActiveType]=useState('hot')
   
   const textareaRef= useRef<HTMLTextAreaElement>(null);
@@ -181,7 +138,7 @@ return (
         {/* comment list */}
         <div className='reply-list'>
            {/* comment item */}
-        {commentList.map(item => <Item item={item} onDeleteComment={deleteComment}/>)}
+        {commentList.map(item => <Item {...item} onDeleteComment={deleteComment}/>)}
  
       </div>
     </div>
@@ -191,13 +148,22 @@ return (
 }
 
 type ItemProps = {
+  rpid:number|string,
+  user:{
+    uid:string,
+    avatar:string,
+    uname:string
+  },
+  content:string,
+  ctime:string,
+  like:number,
   item: Comment,
   onDeleteComment:(rpid:number|string)=>void
 };
 function Item(props:ItemProps){
-  const {item,onDeleteComment}=props
+  const {rpid,user:myuser,content,ctime,like,onDeleteComment}=props
   return (        
-     <div className="reply-item" key={item.rpid}>
+     <div className="reply-item" key={rpid}>
           {/* profile */}
               <div className="root-reply-avatar">
                 <div className="bili-avatar">
@@ -208,20 +174,22 @@ function Item(props:ItemProps){
               <div className="content-wrap">
                 {/* username */}
                 <div className="user-info">
-                  <div className="user-name">{item.user.uname}</div>
+                  <div className="user-name">{user.uname}</div>
                 </div>
                 {/* comment content */}
                 <div className="root-reply">
-                  <span className="reply-content">{item.content}</span>
+                  <span className="reply-content">{content}</span>
                   <div className="reply-info">
                     {/* comment created time */}
-                    <span className="reply-time">{item.ctime}</span>
+                    <span className="reply-time">{ctime}</span>
                     {/* total likes */}
-                    <span className="reply-time">Like:{item.like}</span>
-                    {item.user.uid === user.uid && (
+                    <span className="reply-time">Like:{like}</span>
+                    {
+                      myuser.uid===user.uid&&(
+                     
                       <span
                         className="delete-btn"
-                        onClick={() => onDeleteComment(item.rpid)}>
+                        onClick={() => onDeleteComment(rpid)}>
                         Delete
                       </span>
                     )}
