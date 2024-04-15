@@ -1,43 +1,38 @@
-import { useEffect, useState } from "react"
-import axios from "axios";
 import Product from "../types/product";
 
 
-export default function ProductList() {
-    const [products,setProducts]=useState<Product[]>([])
+type Props={
+    products:Product[]
+}
 
-    useEffect(()=>{
-        async function getProducts(){
-            const response = await axios.get("http://localhost:8000/products");
-            setProducts(response.data)
-        }
-        getProducts()
-    },[])
+export default function ProductList(props:Props) {
+
+   const {products}=props;
+   
     return (
-        <div>
-            <h2>Product List</h2>
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map(prod=>(
-                        <tr key={prod.Id}>
-                        <th scope="row">{prod.Id}</th>
-                        <td>{prod.title}</td>
-                        <td>{prod.price}</td>
-                        <td>{prod.description}</td>
-                    </tr>
-                   ))}
-                  
-                   
-                </tbody>
-            </table>
-        </div>
-    )
+      <div>
+        <h2>Product List</h2>
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Title</th>
+              <th scope="col">Price</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((prod) => (
+              <tr key={prod.Id}>
+                <th scope="row">{prod.Id}</th>
+                <td>{prod.title}</td>
+                <td>{prod.price}</td>
+                <td>{prod.description}</td>
+                <td><button className='btn btn-danger'>Delete</button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
 }
