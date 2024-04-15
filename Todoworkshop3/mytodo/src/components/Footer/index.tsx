@@ -1,15 +1,23 @@
-import React from 'react'
-
-import './index.css'
+import React ,{ChangeEvent}from 'react'
 import Todo from '../../types/todo'
 
+import './index.css'
+
 type Props={
-  todos:Todo[]
+  todos:Todo[],
+  onUpdateAll:(value:boolean)=>void
+  onDeleteFinishedTodos:()=>void;
 }
 export default function Footer(props:Props) {
-  const {todos}=props;
-  const changeCheckbox=()=>{
-    
+  const {todos,onUpdateAll,onDeleteFinishedTodos}=props;
+
+  const changeCheckbox=(e:ChangeEvent<HTMLInputElement>)=>{
+    onUpdateAll(e.target.checked);
+  }
+  const handleDelete=()=>{
+    if(window.confirm('Are you sure?')){
+  onDeleteFinishedTodos();
+    }
   }
   return (
     <div className="todo-footer">
@@ -20,7 +28,7 @@ export default function Footer(props:Props) {
       <span>
         <span>Finished {todos.filter(todo=>todo.done).length}</span> / total {todos.length}
       </span>
-      <button className="btn btn-danger">Delete Finished Tasks</button>
+      <button className="btn btn-danger" onClick={handleDelete}>Delete Finished Tasks</button>
     </div>
   )
 }

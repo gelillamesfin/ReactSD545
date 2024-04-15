@@ -13,14 +13,12 @@ const[todo,setTodo]=useState<Todo[]>([]);
 const addNewToDo=(newTodo:Todo)=>{
 setTodo([...todo,newTodo])
 }
-const updateTodo=(id:string)=>{
- 
- const newTodos= todo.map(todo=>{
 
-    if(todo.id===id){
+const updateTodo=(id:string)=>{
+ const newTodos= todo.map(todo=>{
+     if(todo.id===id){
       return( {...todo,done:!todo.done});
-      
-    }else {
+        }else {
       return todo;
     }
   })
@@ -30,7 +28,12 @@ setTodo(newTodos);
 const deleteTodoById=(id:string)=>{
   setTodo(todo.filter(todo=>todo.id !==id))
 }
-
+const updateAll=(value:boolean)=>{
+  setTodo(todo.map(todo=>({...todo,done:value})))
+}
+const onDeleteFinishedTodos=()=>{
+  setTodo(todo.filter(todo=>!todo.done))
+}
 useEffect(()=>{
   async function getTodos(){
     const response = await fetch("http://localhost:9000/todos");
@@ -45,8 +48,12 @@ getTodos();
       <div className="todo-wrap">
         <Header onAddNewTodo={addNewToDo} />
 
-        <List todos={todo} onUpdateTodo={updateTodo} onDeleteTodoById={deleteTodoById} />
-        <Footer todos={todo} />
+        <List
+          todos={todo}
+          onUpdateTodo={updateTodo}
+          onDeleteTodoById={deleteTodoById}
+        />
+        <Footer todos={todo}onUpdateAll={updateAll} onDeleteFinishedTodos={onDeleteFinishedTodos}/>
       </div>
     </div>
   );
