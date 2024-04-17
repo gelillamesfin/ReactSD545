@@ -16,7 +16,7 @@ export default function List(props: SearchReponse) {
       ) : isLoading ? (
         <h2>Please wait</h2>
       ) : isError ? (
-        <h2>Whoops! Try later</h2>
+        <h2>Please try again</h2>
       ) : (
         <div className="row">
           {users.map((user) => (

@@ -8,13 +8,15 @@ type Props={
     onAddNewProd:(prod:Product)=>void;
 }
 export default function AddProduct(props:Props) {
- const [addProduct, setProduct] = useState<Product>({title:'',price:0,description:''});
+const [addProduct, setProduct] = useState<Product>({title:'',price:0,description:''});
 const {onAddNewProd}=props;
 const {title,price,description}=addProduct
 
 const changeInput=(e:ChangeEvent<HTMLInputElement>)=>{
     const{name,value}=e.target;
     setProduct({...addProduct,[name]:value})
+
+
 }
 const changeDescription =(e:ChangeEvent<HTMLTextAreaElement>)=>{
     setProduct({...addProduct,description:e.target.value})
@@ -38,7 +40,7 @@ const submitForm=async (e:FormEvent<HTMLFormElement>)=>{
                 </div>
                 <div className="mb-3">
                     <label htmlFor="price" className="form-label">Price</label>
-                    <input type="number" className="form-control" id="price" value={price} name='proce' onChange={changeInput} />
+                    <input type="number" className="form-control" id="price" value={price} name='price' onChange={changeInput} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>

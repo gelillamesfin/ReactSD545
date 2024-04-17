@@ -3,8 +3,11 @@ import axios from 'axios';
 import ProductList from './components/product-list';
 import AddProduct from './components/add-product';
 import Product from './types/product';
+
+
 function App() {
  const [products,setProducts]=useState<Product[]>([])
+ 
 useEffect(()=>{
   async function getProducts(){
     const response= await axios.get('http://localhost:8000/products');
@@ -14,9 +17,14 @@ useEffect(()=>{
 const addNewProd=(prod:Product)=>{
   setProducts([...products,prod])
 }
+
+const deleteProductById = (id: number) => {
+  setProducts(products.filter(prod=>prod.Id !== id));
+};
+
   return (
     <div className="container">
-      <ProductList products={products} />
+      <ProductList products={products} onDeleteProduct={()=>deleteProductById(products.id)}/>
       <AddProduct onAddNewProd={addNewProd} />
     </div>
   );
