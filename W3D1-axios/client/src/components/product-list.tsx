@@ -9,16 +9,14 @@ type Props={
 }
 
 export default function ProductList(props:Props) {
-//const [updateProduct,setUpateProduct]=useState(props.products)
+
    const {products,onDeleteProduct}=props;
 
    const handleDelete=(productId:number)=>{
        if (window.confirm("Are you sure?")) {
-         onDeleteProduct(productId);
-       }
+        onDeleteProduct(productId);
+         }
      };
-   
-   
     return (
       <div>
         <h2>Product List</h2>
@@ -38,7 +36,7 @@ export default function ProductList(props:Props) {
                 <td>{prod.title}</td>
                 <td>{prod.price}</td>
                 <td>{prod.description}</td>
-                <td><button className='btn btn-danger' onClick={()=>handleDelete(prod.Id)}>Delete</button></td>
+                <button className='btn btn-danger'style={{display:'none'}} onClick={()=>handleDelete(prod.Id!)}>Delete</button>
               </tr>
             )))}
           </tbody>

@@ -11,7 +11,8 @@ function App() {
 useEffect(()=>{
   async function getProducts(){
     const response= await axios.get('http://localhost:8000/products');
-    setProducts(response.data);}
+    setProducts(response.data);
+  }
     getProducts();
 },[]);
 const addNewProd=(prod:Product)=>{
@@ -19,12 +20,16 @@ const addNewProd=(prod:Product)=>{
 }
 
 const deleteProductById = (id: number) => {
-  setProducts(products.filter(prod=>prod.Id !== id));
+  const filtered=(products.filter(prod=>prod.Id !== id));
+  setProducts(filtered)
 };
 
   return (
     <div className="container">
-      <ProductList products={products} onDeleteProduct={()=>deleteProductById(products.id)}/>
+      <ProductList
+        products={products}
+        onDeleteProduct={(id) => deleteProductById(id)}
+      />
       <AddProduct onAddNewProd={addNewProd} />
     </div>
   );
