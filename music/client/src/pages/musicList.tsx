@@ -1,16 +1,13 @@
-import React from 'react'
-import './musicList.css'
-import SearchBar from './searchBar';
- 
+import React from "react";
+import "./musicList.css";
+import HomePage from "./navBarHome";
 
 function MusicList() {
   return (
     <>
-      <nav>
-        <SearchBar />
-      </nav>
+      <HomePage />
     </>
   );
 }
 
-export default MusicList
+export default MusicList;
