@@ -1,5 +1,3 @@
-// import logo from "../img/piano.jpeg";  
-// import { NavLink } from "react-router-dom";
 import MusicList from '../components/musicList';
 import NavOnly from './navOnly'
  import MyplayLists from '../components/myplayLists';

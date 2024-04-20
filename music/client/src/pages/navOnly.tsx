@@ -1,6 +1,5 @@
-import React from 'react'
-import logo from '../img/piano.jpeg'
 import { NavLink } from 'react-router-dom'
+import logo from '../img/piano.jpeg'
 
 export default function NavOnly() {
   return (

@@ -1,9 +1,8 @@
-//  import axios from "../apis/axios";
-// import HomePage from '../pages/navBarHome'
 import { useState,useEffect } from "react";
+import { IoMdAddCircle } from "react-icons/io";
+ 
 import Music from '../types/musicType'
 import {getAll} from '../apis/songsService'
-import { IoMdAddCircle } from "react-icons/io";
 // type Props={
 //   Songs:Music[]
 // }
