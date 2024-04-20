@@ -1,10 +1,10 @@
 
-interface Music{
-    id: string,
-    userId:string
-    songId:string,
-    orderId:number
-    title:string,
-    urlPath: string;
-    };
+interface Music {
+  id: string;
+  releaseDate:string,
+  songId: string;
+  orderId: number;
+  title: string;
+   
+};
  export default Music;

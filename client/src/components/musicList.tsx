@@ -3,7 +3,6 @@
 import { useState,useEffect } from "react";
 import Music from '../types/musicType'
 import {getAll} from '../apis/songsService'
-import { IoMdAddCircle } from "react-icons/io";
 // type Props={
 //   Songs:Music[]
 // }
@@ -32,22 +31,23 @@ setSongs(response.data)
             <tr>
               <th scope="col">Track</th>
               <th scope="col">Title</th>
-              <th scope="col">Release Date  </th>
+              <th scope="col">Singer </th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-            {songs.map((song, index) => (
-              <tr key={song.id}>
-                <th scope="row">{index + 1}</th>
-                <td>{song.title} </td>
-                <td>{song.releaseDate} </td>
-
-                <td>
-                  <IoMdAddCircle />
-                </td>
-              </tr>
+            {songs.map(song=>(
+ <tr>
+              <th scope="row">{1}</th>
+              <td>{song.title} </td>
+              <td>{song.title} </td>
+              
+              <td>
+                <b>+</b>
+              </td>
+            </tr>
             ))}
+           
           </tbody>
         </table>
       </div>
