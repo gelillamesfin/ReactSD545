@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,6 +17,10 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
-, "src/components/musicList.tsx", "src/components", "../songList.tsx"  ]
+    "src",
+    "src/components/musicList.tsx",
+    "src/components",
+    "../songList.tsx",
+    "../postSong.tsx"
+  ]
 }

@@ -1,7 +1,9 @@
 import { NavLink } from 'react-router-dom'
 import logo from '../img/piano.jpeg'
-
+// import { useState } from 'react'
+// import Music from '../types/musicType'
 export default function NavOnly() {
+  // const[filteredSong,setFilteredSong]=useState<Music[]>([])
   return (
     <div>
        <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -29,8 +31,10 @@ export default function NavOnly() {
               <input
                 className="form-control me-2"
                 type="search"
-                placeholder="Search"
+                placeholder="Search For a Song"
                 aria-label="Search"
+                // value={keyWord}
+                // onChange={(e)=>setSearchedSong(e.target.value)}
               />
               <button className="btn btn-outline-success" type="submit">
                 Search
