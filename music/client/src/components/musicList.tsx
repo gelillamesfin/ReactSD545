@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,ChangeEvent } from "react";
 import { IoMdAddCircle } from "react-icons/io";
 import Music from "../types/musicType";
 import { addToPlaylist, getAll } from "../apis/songsService";
 import PubSub from "pubsub-js";
-
+import logo from '../img/piano.jpeg'
+import { NavLink } from "react-router-dom";
 function Musiclist() {
   const [allSongs, setAllSongs] = useState<Music[]>([]);
+const [filteredSong,setFilteredSong]=useState<Music[]>([]);
+const [searchedWord,setSearchedWord]=useState<string>('');
 
   useEffect(() => {
     async function getAllSongs() {
@@ -29,8 +32,73 @@ function Musiclist() {
       console.error();
     }
   };
+  const handleSearchInput=(e:ChangeEvent<HTMLInputElement>)=>{
+setSearchedWord(e.target.value);
+filterSong(e.target.value);
+  };
+  const filterSong=(keyWord:string)=>{
+    const filtered:any=allSongs.filter(song=>song.title.toLowerCase().includes(keyWord.toLowerCase())
+  )
+  setFilteredSong(filtered)
+  }
+  const songsToShow = searchedWord ? filteredSong : allSongs;
+  
   return (
     <>
+      <div>
+        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+          <div className="container-fluid">
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+              style={{ justifyContent: "space-between" }}
+            >
+              <img src={logo} alt="piano Logo" style={{ height: "100px" }} />
+              <form className="d-flex" role="search">
+                <input
+                  className="form-control me-2"
+                  type="search"
+                  placeholder="Search For a Song"
+                  aria-label="Search"
+                  value={searchedWord}
+                  onChange={handleSearchInput}
+                />
+                <button className="btn btn-outline-success" type="submit">
+                  Search
+                </button>
+              </form>
+              <div>
+                <NavLink to="/login">
+                  <button
+                    className="btn btn-outline-success"
+                    type="submit"
+                    style={{
+                      display: "flex",
+                      marginLeft: "3px",
+                      alignItems: "end ",
+                    }}
+                  >
+                    Log Out
+                  </button>
+                </NavLink>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      {/**nav bar above this  */}
       <div style={{ marginTop: "4%" }}>
         <hr></hr>
         <h1>Top Hits </h1>
@@ -44,7 +112,7 @@ function Musiclist() {
             </tr>
           </thead>
           <tbody>
-            {allSongs.map((song, index) => (
+            {songsToShow.map((song, index) => (
               <tr key={song.id}>
                 <th scope="row">{index + 1}</th>
                 <td>{song.title} </td>

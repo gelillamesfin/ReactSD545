@@ -1,18 +1,15 @@
- import MusicList from '../components/musicList';
-import MyplayLists from '../components/myplayLists';
-import NavOnly from './navOnly'
- //import MyplayLists from '../components/myplayLists';
- import AudioPlayer from "react-h5-audio-player";
+import MusicList from "../components/musicList";
+import MyplayLists from "../components/myplayLists";
+import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 
 function HomePage() {
-
   return (
     <>
-      <NavOnly />
-      <MusicList/>
-     <MyplayLists/>
-      
+
+      <MusicList />
+      <MyplayLists />
+
       <div
         style={{
           display: "flex",
