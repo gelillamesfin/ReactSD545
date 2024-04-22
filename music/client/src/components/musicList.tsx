@@ -21,15 +21,12 @@ function Musiclist() {
     getAllSongs();
   }, []);
 
-  const handlePublishSong =async (song: Music) => {
-    console.log(song,'from handlepusblish should be obj')
+  const handlePublishSong = async (song: Music) => {
     PubSub.publish("addSongToPlaylist", song);
-    try{
-      const addNewSongToServer= await addToPlaylist(song.id)
-      console.log(addNewSongToServer.data,'from music list addnewsongtoserver')
-
-    }catch{
-      console.error('addnewsongtoserverfailed')
+    try {
+      await addToPlaylist(song.id);
+    } catch {
+      console.error();
     }
   };
   return (
@@ -52,7 +49,7 @@ function Musiclist() {
                 <th scope="row">{index + 1}</th>
                 <td>{song.title} </td>
                 <td>{song.releaseDate} </td>
-            
+
                 <td>
                   <button onClick={() => handlePublishSong(song)}>
                     <IoMdAddCircle />
