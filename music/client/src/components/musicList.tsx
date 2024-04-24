@@ -6,7 +6,7 @@ import PubSub from "pubsub-js";
 import logo from '../img/piano.jpeg'
 import { NavLink } from "react-router-dom";
 function Musiclist() {
-  const [allSongs, setAllSongs] = useState<Music[]>([]);
+const [allSongs, setAllSongs] = useState<Music[]>([]);
 const [filteredSong,setFilteredSong]=useState<Music[]>([]);
 const [searchedWord,setSearchedWord]=useState<string>('');
 
@@ -32,10 +32,16 @@ const [searchedWord,setSearchedWord]=useState<string>('');
       console.error();
     }
   };
-  const handleSearchInput=(e:ChangeEvent<HTMLInputElement>)=>{
-setSearchedWord(e.target.value);
-filterSong(e.target.value);
+  const handleSearchInput=(e:ChangeEvent<HTMLInputElement>|null=null)=>{
+    const keyword=e?e.target.value:searchedWord
+setSearchedWord(keyword);
+filterSong(keyword);
   };
+  const handleKeyDown=(e:React.KeyboardEvent<HTMLInputElement>)=>{
+    if(e.key==='Enter'){
+      handleSearchInput()
+    }
+  }
   const filterSong=(keyWord:string)=>{
     const filtered:any=allSongs.filter(song=>song.title.toLowerCase().includes(keyWord.toLowerCase())
   )
@@ -73,6 +79,7 @@ filterSong(e.target.value);
                   aria-label="Search"
                   value={searchedWord}
                   onChange={handleSearchInput}
+                  onKeyDown={handleKeyDown}
                 />
                 <button className="btn btn-outline-success" type="submit">
                   Search
@@ -99,7 +106,7 @@ filterSong(e.target.value);
       </div>
 
       {/**nav bar above this  */}
-      <div style={{ marginTop: "4%" }}>
+      <div style={{ marginTop: "1%" }}>
         <hr></hr>
         <h1>Top Hits </h1>
         <table className="table">

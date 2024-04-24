@@ -30,7 +30,7 @@ export const removeSong = (songId: string) => {
   console.log(songId,'from remove service')
   const token = localStorage.getItem("token");
 
-  if (token) {
+  if (token) { 
     http.defaults.headers[`Authorization`] = `Bearer ${token}`;
   }
   return http.post(`/api/playlist/remove`,{songId});

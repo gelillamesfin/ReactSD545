@@ -5,5 +5,6 @@ interface Music {
   songId: string;
   orderId: number;
   title: string;
+urlPath:string;
 };
  export default Music;

@@ -21,6 +21,8 @@
     "src/components/musicList.tsx",
     "src/components",
     "../songList.tsx",
-    "../postSong.tsx"
+    "../postSong.tsx",
+    "../navOnly.tsx",
+    "../examMemo.tsx"
   ]
 }

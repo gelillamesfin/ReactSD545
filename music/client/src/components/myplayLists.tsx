@@ -1,17 +1,21 @@
-import { MdRemoveCircle } from "react-icons/md";
 import { useState, useEffect } from "react";
-import Music from "../types/musicType";
-import { getPlaylist } from "../apis/songsService";
+import { MdRemoveCircle } from "react-icons/md";
 import { FaPlayCircle } from "react-icons/fa";
 import PubSub from "pubsub-js";
-import {removeSong} from '../apis/songsService'
+
+import Music from "../types/musicType";
+import { getPlaylist } from "../apis/songsService";
+import { removeSong } from "../apis/songsService";
+
+
+
 function MyPlaylists() {
   const [playlist, setPlayList] = useState<Music[]>([]);
+  
   useEffect(() => {
-    const subPlayList = () => {
+ 
       PubSub.subscribe("addSongToPlaylist", fetchPlaylist);
-    };
-    subPlayList();
+       
     fetchPlaylist();
     return () => {
       PubSub.unsubscribe("addSongToPlaylist");
@@ -26,14 +30,24 @@ function MyPlaylists() {
       console.log(error);
     }
   };
-const handleRemoveSong=async(songId:string)=>{
-const response = await removeSong(songId);
-const updatedlist = await getPlaylist()
-setPlayList(updatedlist.data)
-console.log(response.data,'from removehandle playlist')
-}
+  const handleRemoveSong = async (songId: string) => {
+    await removeSong(songId);
+    const updatedlist = await getPlaylist();
+    setPlayList(updatedlist.data);
+  };
+
+
+//for audio 
+  const handlePublishSong = async (song: Music) => {
+    PubSub.publish("songToPlay", song);
+  
+  };
+
+
+
+
   return (
-    <div style={{ marginTop: "90px" }}>
+    <div style={{ marginTop: "20px" }}>
       <h1>MyPlay Lists </h1>
       <table className="table">
         <thead>
@@ -50,11 +64,11 @@ console.log(response.data,'from removehandle playlist')
               <td>{song.title}</td>
 
               <td>
-                <button onClick={()=>handleRemoveSong(song.songId)}>
+                <button onClick={() => handleRemoveSong(song.songId)}>
                   <MdRemoveCircle />
                 </button>
                 &nbsp;&nbsp;
-                <button>
+                <button onClick={()=> handlePublishSong(song)}>
                   <FaPlayCircle />
                 </button>
               </td>
